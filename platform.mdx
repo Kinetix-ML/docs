@@ -1,0 +1,49 @@
+---
+title: Using the Platform
+description: "Let's walk you through how to create your first pipeline."
+---
+
+<img
+  className="block dark:hidden"
+  src="/images/hero-light.svg"
+  alt="Hero Light"
+/>
+<img
+  className="hidden dark:block"
+  src="/images/hero-dark.svg"
+  alt="Hero Dark"
+/>
+
+## Create an Account
+
+You can create a free account from [insert signup link]. From here you will be able to use the full functionality of the Kinetix ML platform for testing and development. When you're ready to deploy to production you'll be charged based on usage (pricing link).
+
+## Create Your First Project
+
+After logging in, you will be placed on the `Recent projects` page where you can view and create projects. Let's start by clicking `New Project` from the top right. You should enter a short but descriptive name for your project. Let's go with `Pose Starter` for now. Now you should see your new project in the gallery, choose it to open in the pipeline editor.
+
+## Create Your First nodes
+
+Kinetix ML uses a node graph system for defining computer vision pipelines. We'll call the main editor space the `canvas`.
+
+Start by clicking the `spacebar` to open the node library. Here you can search and add nodes. Inputs and outputs are used to transport data in and out of your pipeline. Find the `input` node in `IO` section and double click to add it to your canvas. If at anytime you want to remove a node simply select it and press the `delete` or `backspace` key.
+
+Nodes can do anything from simple math to running ML models. Let's use one of those powerful ML nodes. Add the `Pose Detection 2D` node to the canvas. This node takes an `Image` input and returns a `KPFrame` a list of 17 keypoints on a person's body.
+
+To connect nods to each other, drag and drop from one anchor to the other. Input anchors are on the left, output anchors are on the right. Inputs can only connect to one output but outputs can connect to multiple inputs. Inputs and outputs can only connect to anchors of the opposite type.
+
+Connect the output of the `Image` pipeline input node we created earlier to the input of the `Pose Detection 2D` node.
+
+For this demo, and likely many you will create, we want to see the data overlayed on our webcam stream. Add the `Draw Key Points` node to your canvas.
+
+In order to draw the actual overlay, we'll need another pipeline input for the drawing canvas. Add a new pipeline input and change the type to `Canvas`.
+
+Connect the `KPFrame` output from the `Pose Detection 2D` node to the `KPFrame` input of the `Draw Key Points` node. Then connect the `Image` and `Canvas` pipeline inputs to the `Draw Key Points` node.
+
+The last step is returning outputs from our pipeline. Add an `output` node from the `IO` section of the node library. Then connect the `KPFrame` output of the `Pose Detection 2D` node to the input of the pipeline output. The pipeline output's data type should change to match.
+
+Congrats you've built your first pipeline, save the project.
+
+## Test
+
+Click the `Deploy` button in the top right to test your model in the deploy widget. This page uses the same `kml-pipe-ts` library that you can use to deploy your pipeline in production.

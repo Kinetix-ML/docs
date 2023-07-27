@@ -1,0 +1,32 @@
+---
+title: "JavaScript"
+description: "An overview of the JavaScript library for deploying Kinetix ML pipelines."
+---
+
+## KMLPipeline
+
+A Kinetix ML Pipeline object which can be used to load and execute pipelines from the Kinetix ML platform.
+
+### Example
+
+```TypeScript
+var pipeline = new KMLPipeline("[Your Project Name]", "[Your API Key]");
+```
+
+### Methods
+
+#### Initialize (async)
+
+Loads the Kinetix ML Pipeline from the Kinetix ML platform for execution later.
+
+```TypeScript
+await pipeline.initialize();
+```
+
+#### Execute (async)
+
+Executes the loaded Kinetix ML Pipeline given the correct inputs and returns the outputs.
+
+```TypeScript
+let outputs = await pipeline.execute([]) // the [] should be replaced with your list of inputs
+```

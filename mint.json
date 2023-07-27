@@ -1,17 +1,17 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Kinetix ML",
   "logo": {
-    "dark": "/logo/dark.svg",
+    "dark": "/logo/light.svg",
     "light": "/logo/light.svg"
   },
   "favicon": "/favicon.png",
   "colors": {
-    "primary": "#9563FF",
-    "light": "#AE87FF",
-    "dark": "#0D001D",
+    "primary": "#f43f5e",
+    "light": "#f43f5e",
+    "dark": "#030712",
     "background": {
-      "dark": "#090014"
+      "dark": "#030712"
     },
     "anchors": {
       "from": "#FF7F57",
@@ -26,7 +26,7 @@
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "url": "https://kinetixml.com"
   },
   "tabs": [
     {
@@ -54,7 +54,7 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "quickstart", "development"]
+      "pages": ["introduction", "platform", "quickstart", "development"]
     },
     {
       "group": "Essentials",
@@ -62,7 +62,7 @@
     },
     {
       "group": "API Documentation",
-      "pages": ["api-reference/authentication"]
+      "pages": ["api-reference/js"]
     },
     {
       "group": "Endpoint Examples",
