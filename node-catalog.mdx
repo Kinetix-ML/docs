@@ -1,0 +1,102 @@
+---
+title: "Node Catalog"
+description: "An overview of every node supported by the Kinetix ML platform and supporting libraries."
+---
+
+## Key Point
+
+### Pose Detection 2D `PoseDetection2D`
+
+Detects 17 key points on a person's body including their major joints, eyes, ears, and nose. Helpful for analyzing body motion including body poses and athletic movements.
+
+| Parameter            | Type     | Description                                             |
+| -------------------- | -------- | ------------------------------------------------------- |
+| Confidence Threshold | `Double` | Score threshold for detected keypoints between 0 and 1. |
+
+| Input | Type    | Description                              |
+| ----- | ------- | ---------------------------------------- |
+| Image | `Image` | Image to perform key point detection on. |
+
+| Output   | Type      | Description                                         |
+| -------- | --------- | --------------------------------------------------- |
+| KP Frame | `KPFrame` | List of key points (`KeyPoint`) on a person's body. |
+
+### Face Mesh Detection `FaceMeshDetection`
+
+Detects 17 key points on a person's body including their major joints, eyes, ears, and nose. Helpful for analyzing body motion including body poses and athletic movements.
+
+| Input | Type    | Description                              |
+| ----- | ------- | ---------------------------------------- |
+| Image | `Image` | Image to perform key point detection on. |
+
+| Output   | Type      | Description                                         |
+| -------- | --------- | --------------------------------------------------- |
+| KP Frame | `KPFrame` | List of key points (`KeyPoint`) on a person's face. |
+
+### Calculate Joint Angles `CalcJointAngles`
+
+Calculates the 2D angle of each joint.
+
+| Input    | Type      | Description                                         |
+| -------- | --------- | --------------------------------------------------- |
+| KP Frame | `KPFrame` | List of key points (`KeyPoint`) on a person's body. |
+
+| Output | Type      | Description                          |
+| ------ | --------- | ------------------------------------ |
+| Angles | `Vec`     | List of joint angles (`Double`).     |
+| Labels | `Label[]` | List of labels (`Label`) to overlay. |
+
+### Three Key Point Angle `ThreeKPAngle`
+
+Calculates the 2D angle between three key points.
+
+| Input       | Type       | Description                    |
+| ----------- | ---------- | ------------------------------ |
+| Key Point 1 | `KeyPoint` | First key point in the angle.  |
+| Key Point 2 | `KeyPoint` | Center key point in the angle. |
+| Key Point 3 | `KeyPoint` | Third key point in the angle.  |
+
+| Output | Type     | Description                            |
+| ------ | -------- | -------------------------------------- |
+| Angle  | `Double` | Angle between the 3 points (`Double`). |
+
+### Key Point Distance `KPDist`
+
+Calculates the distance between two key points.
+
+| Input       | Type       | Description                    |
+| ----------- | ---------- | ------------------------------ |
+| Key Point 1 | `KeyPoint` | First key point in the angle.  |
+| Key Point 2 | `KeyPoint` | Center key point in the angle. |
+
+| Output | Type     | Description                                         |
+| ------ | -------- | --------------------------------------------------- |
+| Dist   | `Double` | Pixel distance between the 2 key points (`Double`). |
+
+### Smooth Key Points `SmoothKeyPoints`
+
+Performs a moving weighted average smoothing algorithm that prioritizes model confidence and weeds out outliers.
+
+| Parameter   | Type  | Description                                                                                                 |
+| ----------- | ----- | ----------------------------------------------------------------------------------------------------------- |
+| Frame Count | `Int` | Number of frames to hold in history for use with the moving weighted average. More frames = more smoothing. |
+
+| Input    | Type      | Description                                         |
+| -------- | --------- | --------------------------------------------------- |
+| KP Frame | `KPFrame` | List of key points (`KeyPoint`) on a person's body. |
+
+| Output   | Type      | Description                                                                                |
+| -------- | --------- | ------------------------------------------------------------------------------------------ |
+| KP Frame | `KPFrame` | List of key points (`KeyPoint`) on a person's body after smoothing algorithm is performed. |
+
+### Calculate Key Point Velocities `CalcKeyPointVelocities`
+
+Calculates the velocity of each key point using the last frame as reference point.
+
+| Input    | Type      | Description                                         |
+| -------- | --------- | --------------------------------------------------- |
+| KP Frame | `KPFrame` | List of key points (`KeyPoint`) on a person's body. |
+
+| Output     | Type  | Description                                            |
+| ---------- | ----- | ------------------------------------------------------ |
+| Velocities | `Vec` | List of pixel velocties (`Double`) for each key point. |
