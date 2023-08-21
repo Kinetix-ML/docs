@@ -1,5 +1,6 @@
 ---
 title: "Node Catalog"
+
 description: "An overview of every node supported by the Kinetix ML platform and supporting libraries."
 ---
 
@@ -9,94 +10,480 @@ description: "An overview of every node supported by the Kinetix ML platform and
 
 Detects 17 key points on a person's body including their major joints, eyes, ears, and nose. Helpful for analyzing body motion including body poses and athletic movements.
 
-| Parameter            | Type     | Description                                             |
-| -------------------- | -------- | ------------------------------------------------------- |
-| Confidence Threshold | `Double` | Score threshold for detected keypoints between 0 and 1. |
+- **Parameters:**
+  - Confidence Threshold (_Double_): 0.3
+- **Inputs:**
+  - _Image_
+- **Outputs:**
 
-| Input | Type    | Description                              |
-| ----- | ------- | ---------------------------------------- |
-| Image | `Image` | Image to perform key point detection on. |
+  - KP Frame (_KPFrame_)
 
-| Output   | Type      | Description                                         |
-| -------- | --------- | --------------------------------------------------- |
-| KP Frame | `KPFrame` | List of key points (`KeyPoint`) on a person's body. |
+  **Platforms:**`JS`
 
 ### Face Mesh Detection `FaceMeshDetection`
 
 Detects 17 key points on a person's body including their major joints, eyes, ears, and nose. Helpful for analyzing body motion including body poses and athletic movements.
 
-| Input | Type    | Description                              |
-| ----- | ------- | ---------------------------------------- |
-| Image | `Image` | Image to perform key point detection on. |
+- **Inputs:**
+  - _Image_
+- **Outputs:**
 
-| Output   | Type      | Description                                         |
-| -------- | --------- | --------------------------------------------------- |
-| KP Frame | `KPFrame` | List of key points (`KeyPoint`) on a person's face. |
+  - KP Frame (_KPFrame_)
+
+  **Platforms:**`JS`
 
 ### Calculate Joint Angles `CalcJointAngles`
 
 Calculates the 2D angle of each joint.
 
-| Input    | Type      | Description                                         |
-| -------- | --------- | --------------------------------------------------- |
-| KP Frame | `KPFrame` | List of key points (`KeyPoint`) on a person's body. |
+- **Inputs:**
+  - _KPFrame_
+- **Outputs:**
 
-| Output | Type      | Description                          |
-| ------ | --------- | ------------------------------------ |
-| Angles | `Vec`     | List of joint angles (`Double`).     |
-| Labels | `Label[]` | List of labels (`Label`) to overlay. |
+  - Angles (_Vec_)
+  - Labels (_Label[]_)
+
+  **Platforms:**`JS`
 
 ### Three Key Point Angle `ThreeKPAngle`
 
 Calculates the 2D angle between three key points.
 
-| Input       | Type       | Description                    |
-| ----------- | ---------- | ------------------------------ |
-| Key Point 1 | `KeyPoint` | First key point in the angle.  |
-| Key Point 2 | `KeyPoint` | Center key point in the angle. |
-| Key Point 3 | `KeyPoint` | Third key point in the angle.  |
+- **Inputs:**
+  - _KeyPoint_
+  - _KeyPoint_
+  - _KeyPoint_
+- **Outputs:**
 
-| Output | Type     | Description                            |
-| ------ | -------- | -------------------------------------- |
-| Angle  | `Double` | Angle between the 3 points (`Double`). |
+  - Angle (_Double_)
+
+  **Platforms:**`JS`
 
 ### Key Point Distance `KPDist`
 
 Calculates the distance between two key points.
 
-| Input       | Type       | Description                    |
-| ----------- | ---------- | ------------------------------ |
-| Key Point 1 | `KeyPoint` | First key point in the angle.  |
-| Key Point 2 | `KeyPoint` | Center key point in the angle. |
+- **Inputs:**
+  - _KeyPoint_
+  - _KeyPoint_
+- **Outputs:**
 
-| Output | Type     | Description                                         |
-| ------ | -------- | --------------------------------------------------- |
-| Dist   | `Double` | Pixel distance between the 2 key points (`Double`). |
+  - Dist (_Double_)
+
+  **Platforms:**`JS`
 
 ### Smooth Key Points `SmoothKeyPoints`
 
 Performs a moving weighted average smoothing algorithm that prioritizes model confidence and weeds out outliers.
 
-| Parameter   | Type  | Description                                                                                                 |
-| ----------- | ----- | ----------------------------------------------------------------------------------------------------------- |
-| Frame Count | `Int` | Number of frames to hold in history for use with the moving weighted average. More frames = more smoothing. |
+- **Parameters:**
+  - Frame Count (_Int_): 10
+- **Inputs:**
+  - _KPFrame_
+- **Outputs:**
 
-| Input    | Type      | Description                                         |
-| -------- | --------- | --------------------------------------------------- |
-| KP Frame | `KPFrame` | List of key points (`KeyPoint`) on a person's body. |
+  - KP Frame (_KPFrame_)
 
-| Output   | Type      | Description                                                                                |
-| -------- | --------- | ------------------------------------------------------------------------------------------ |
-| KP Frame | `KPFrame` | List of key points (`KeyPoint`) on a person's body after smoothing algorithm is performed. |
+  **Platforms:**`JS`
+
+### Crop Key Points `CropKeyPoints`
+
+Performs a square crop around the region of the KPFrame for use with normalization.
+
+- **Inputs:**
+  - _KPFrame_
+- **Outputs:**
+
+  - KP Frame (_KPFrame_)
+
+  **Platforms:**`JS`
+
+### Normalize Key Points `NormKeyPoints`
+
+Performs a L2 normalization on a cropped KPFrame.
+
+- **Inputs:**
+  - _KPFrame_
+- **Outputs:**
+
+  - KP Frame (_KPFrame_)
+
+  **Platforms:**`JS`
+
+### Normalize Key Points Size `NormKeyPointsSize`
+
+Performs a normalization on a cropped KPFrame based on the width and height of the keypoints.
+
+- **Inputs:**
+  - _KPFrame_
+- **Outputs:**
+
+  - KP Frame (_KPFrame_)
+
+  **Platforms:**`JS`
+
+### Compare KPFrames `CompareKPFrames`
+
+Performs a keypoint-wise cosine similarity on all the keypoints in two KPFrames.
+
+- **Inputs:**
+  - _KPFrame_
+  - _KPFrame_
+- **Outputs:**
+
+  - Similarities (_Vec_)
+
+  **Platforms:**`JS`
 
 ### Calculate Key Point Velocities `CalcKeyPointVelocities`
 
 Calculates the velocity of each key point using the last frame as reference point.
 
-| Input    | Type      | Description                                         |
-| -------- | --------- | --------------------------------------------------- |
-| KP Frame | `KPFrame` | List of key points (`KeyPoint`) on a person's body. |
+- **Inputs:**
+  - _KPFrame_
+- **Outputs:**
 
-| Output     | Type  | Description                                            |
-| ---------- | ----- | ------------------------------------------------------ |
-| Velocities | `Vec` | List of pixel velocties (`Double`) for each key point. |
+  - Velocities (_Vec_)
+
+  **Platforms:**`JS`
+
+### Create Key Point `CreateKeyPoint`
+
+Creates a key point object.
+
+- **Inputs:**
+  - _Double_
+  - _Double_
+  - _Double_
+  - _String_
+- **Outputs:**
+
+  - Key Point (_KeyPoint_)
+
+  **Platforms:**`JS`
+
+### Get Key Point `GetKeyPoint`
+
+Gets a key point object from a KPFrame.
+
+- **Parameters:**
+  - Index (_Int_): 0
+- **Inputs:**
+  - _KPFrame_
+- **Outputs:**
+
+  - Key Point (_KeyPoint_)
+
+  **Platforms:**`JS`
+
+### Deconstruct Key Point `DeconstructKeyPoint`
+
+Deconstructs a key point object.
+
+- **Inputs:**
+  - _KeyPoint_
+- **Outputs:**
+
+  - x (_Double_)
+  - y (_Double_)
+  - score (_Double_)
+  - name (_String_)
+
+  **Platforms:**`JS`
+
+### Set Key Point `SetKeyPoint`
+
+Sets a key point object.
+
+- **Parameters:**
+  - Index (_Int_): 0
+- **Inputs:**
+  - _KPFrame_
+  - _KeyPoint_
+- **Outputs:**
+
+  - KP Frame (_KPFrame_)
+
+  **Platforms:**`JS`
+
+### CreateCrop `CreateCrop`
+
+Creates a crop rectangle from a KPFrame.
+
+- **Inputs:**
+  - _KPFrame_
+  - _Image_
+- **Outputs:**
+
+  - crop (_Vec_)
+
+  **Platforms:**`JS`
+
+## Object Detection
+
+### Roboflow Detect `RoboflowDetect`
+
+Runs object detection on an input image using Roboflow Object Detection models.
+
+- **Parameters:**
+  - Model (_String_):
+  - Version (_Int_): 1
+  - API Key (_String_):
+  - Confidence Threshold (_Double_): 0.5
+  - Overlap Threshold (_Double_): 0.5
+- **Inputs:**
+  - _Image_
+- **Outputs:**
+
+  - BBox Frame (_BBoxFrame_)
+
+  **Platforms:**`JS`
+
+## Vector
+
+### Smooth Vectors `SmoothVecs`
+
+Performs a moving average smoothing algorithm on vectors.
+
+- **Parameters:**
+  - Frame Count (_Int_): 10
+- **Inputs:**
+  - _Vec_
+- **Outputs:**
+
+  - KP Frame (_Vec_)
+
+  **Platforms:**`JS`
+
+### Get Vector Value `GetVecValue`
+
+Gets a value from a Vec.
+
+- **Parameters:**
+  - Index (_Int_): 0
+- **Inputs:**
+  - _Vec_
+- **Outputs:**
+
+  - Double (_Double_)
+
+  **Platforms:**`JS`
+
+### Set Vector Value `SetVecValue`
+
+Sets a value to a Vec.
+
+- **Parameters:**
+  - Index (_Int_): 0
+- **Inputs:**
+  - _Vec_
+  - _Double_
+- **Outputs:**
+
+  - Vec (_Vec_)
+
+  **Platforms:**`JS`
+
+## Display
+
+### Draw Key Points `DrawKeyPoints`
+
+Draws a KPFrame on an input canvas.
+
+- **Parameters:**
+  - Radius (percent) (_Double_): 0.1
+- **Inputs:**
+
+  - _KPFrame_
+  - _Image_
+  - _Canvas_
+
+  **Platforms:**`JS`
+
+### Draw Bounding Boxes `DrawBBoxFrame`
+
+Draws a BBoxFrame on an input canvas.
+
+- **Inputs:**
+
+  - _BBoxFrame_
+  - _Canvas_
+
+  **Platforms:**`JS`
+
+### Draw Labels `DrawLabels`
+
+Draws Labels on an input canvas.
+
+- **Inputs:**
+
+  - _Label[]_
+  - _Image_
+  - _Canvas_
+
+  **Platforms:**`JS`
+
+### Draw One Label `DrawLabel`
+
+Draws one Label on an input canvas.
+
+- **Inputs:**
+
+  - _Label_
+  - _Image_
+  - _Canvas_
+
+  **Platforms:**`JS`
+
+### Create Label `CreateLabel`
+
+Creates a label object.
+
+- **Inputs:**
+  - _Double_
+  - _Double_
+  - _String_
+- **Outputs:**
+
+  - Label (_Label_)
+
+  **Platforms:**`JS`
+
+## Math
+
+### Add Inputs `AddInputs`
+
+Adds two inputs.
+
+- **Inputs:**
+  - _Double_
+  - _Double_
+- **Outputs:**
+
+  - Result (_Double_)
+
+  **Platforms:**`JS`
+
+### Divide Inputs `DivideInputs`
+
+Divides two inputs.
+
+- **Inputs:**
+  - _Double_
+  - _Double_
+- **Outputs:**
+
+  - Result (_Double_)
+
+  **Platforms:**`JS`
+
+### Multiply Inputs `MultiplyInputs`
+
+Multiply two inputs.
+
+- **Inputs:**
+  - _Double_
+  - _Double_
+- **Outputs:**
+
+  - Result (_Double_)
+
+  **Platforms:**`JS`
+
+### Subtract Inputs `SubtractInputs`
+
+Subtracts two inputs.
+
+- **Inputs:**
+  - _Double_
+  - _Double_
+- **Outputs:**
+
+  - Result (_Double_)
+
+  **Platforms:**`JS`
+
+### Constant `Constant`
+
+Exports its parameter as an output for use with other nodes.
+
+- **Parameters:**
+  - Value (_String_): 0
+  - Data Type (_String_): 0
+- **Outputs:**
+
+  - Data (_Any_)
+
+  **Platforms:**`JS`
+
+### Round `Round`
+
+Rounds a Double to the closest whole number.
+
+- **Inputs:**
+  - _Double_
+- **Outputs:**
+
+  - rounded (_Int_)
+
+  **Platforms:**`JS`
+
+### Clamp `Clamp`
+
+Clamps a value between a minimum and maximum.
+
+- **Parameters:**
+  - Minimum (_Double_): 0
+  - Maximum (_Double_): 100
+- **Inputs:**
+  - _Double_
+- **Outputs:**
+
+  - clamped (_Int_)
+
+  **Platforms:**`JS`
+
+## Logic
+
+### Conditional `Conditional`
+
+Outputs a boolean based on the comparison of two inputs
+
+- **Parameters:**
+  - Operator (_String_): ==
+- **Inputs:**
+  - _Any_
+  - _Any_
+- **Outputs:**
+
+  - Boolean (_Boolean_)
+
+  **Platforms:**`JS`
+
+### Switch `Switch`
+
+Prevents execution based on a boolean value. The second input passes directly to the Passthrough output for use in the node after.
+
+- **Inputs:**
+  - _Boolean_
+  - _Any_
+- **Outputs:**
+
+  - Passthrough (_Any_)
+
+  **Platforms:**`JS`
+
+## I/O
+
+### Crop `Crop`
+
+Rounds a Double to the closest whole number.
+
+- **Inputs:**
+  - _Vec_
+  - _Image_
+- **Outputs:**
+
+  - cropped (_Image_)
+
+  **Platforms:**`JS`
