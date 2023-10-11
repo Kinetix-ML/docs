@@ -1,0 +1,73 @@
+---
+title: "Deployment - Python"
+description: "Deploy your Kinetix ML pipeline to Python in less than 5 minutes."
+---
+
+## Install the Library
+
+Kinetix ML should be installed as a node module using the command below.
+
+```bash
+pip install KMLPipePy
+```
+
+## Initialization
+
+First start by importing the module.
+
+```Python
+from KMLPipePy import KMLPipeline
+```
+
+Create the pipeline object using your project name, version, and API Key.
+
+```Python
+pipe = KMLPipeline("[Your Project Name]", 1, "[Your API Key]")
+```
+
+Initialize the pipeline.
+
+```Python
+pipe.initialize()
+```
+
+## Execution
+
+To execute the pipeline you need to run the execute method with the required input data.
+
+```Python
+pipe.execute([]) # the [] should be replaced with your list of inputs
+```
+
+## Webcam Inference
+
+The pipeline will need a data source for each of its inputs. A common input is image data for nodes such as PoseDetection2D. For these nodes you can use OpenCV.
+
+```Python
+from KMLPipePy import KMLPipeline
+from KMLPipePy.types import Canvas
+import cv2
+import time
+
+pipe = KMLPipeline("[Project Name]", 1, "[API Key]")
+pipe.initialize() # initialize the pipeline
+
+out = Canvas() # initialize output drawing canvas
+cam = cv2.VideoCapture(0) # start OpenCV webcam capture
+
+while True:
+  res, image = cam.read() # read image from webcam
+
+  if image is not None and image.any():
+    out.set_image(image)
+    t0 = time.time()
+    outputs = pipe.execute([image, out]) # execute pipeline
+    print(outputs)
+    t1 = time.time()
+    print(f"{1/(t1-t0)} fps")
+
+    if out.show(1):
+      break
+
+cam.release()
+```
