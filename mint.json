@@ -54,11 +54,17 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "platform", "quickstart", "node-catalog"]
+      "pages": [
+        "introduction",
+        "platform",
+        "quickstartJS",
+        "quickstartPy",
+        "node-catalog"
+      ]
     },
     {
       "group": "API Documentation",
-      "pages": ["api-reference/js"]
+      "pages": ["api-reference/js", "api-reference/py"]
     }
   ],
   "footerSocials": {
